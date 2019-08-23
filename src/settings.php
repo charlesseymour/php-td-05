@@ -8,5 +8,17 @@ return [
         'renderer' => [
             'template_path' => __DIR__ . '/../templates/',
         ],
+		
+		// Eloquent database settings
+		'db' => [
+            'driver' => 'sqlite',
+            'host' => 'localhost',
+            'database' => '../blog.db',
+            'username' => 'root',
+            'password' => '',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ]
     ],
 ];
