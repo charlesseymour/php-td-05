@@ -6,6 +6,6 @@ include("../models/Post.php");
 // Routes
 
 $app->get('/', function ($request, $response, $args) {
-	$post = Post::find(1);
-	return $this->view->render($response, 'posts.phtml', ["post" => $post]);
+	$posts = Post::take(3)->get();
+	return $this->view->render($response, 'posts.phtml', ["posts" => $posts]);
 });
