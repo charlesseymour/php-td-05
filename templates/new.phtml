@@ -1,15 +1,39 @@
-<?php include __DIR__ . '/header.phtml'; ?>
+<?php 
+include __DIR__ . '/header.phtml';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	$title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+	$entry = filter_input(INPUT_POST, 'entry', FILTER_SANITIZE_STRING);
+	if (empty(trim($title)) || empty(trim($entry))) {
+		$alert = "<p style=\"color:red;\">Please enter all fields</p>";
+	} else {
+		$post = new Post;
+		$post->title = $title;
+		$post->body = $entry;
+		$post->date = date('m/d/Y');
+		$post->save();
+		$_SESSION['status'] = "Post added!";
+		header("Location: /");
+		exit();
+	}
+}
+?>
 <section>
 	<div class="container">
 		<div class="new-entry">
 			<h2>Publish New Entry</h2>
-			<form>
+			<?php 
+			 if (isset($alert)) { echo $alert; };
+			?>
+			<form action="/new" method="post">
+				<input type="hidden" name="<?php echo $nameKey; ?>" value="<?php echo $name; ?>">
+				<input type="hidden" name="<?php echo $valueKey; ?>" value="<?php echo $value; ?>">
 				<label for="title"> Title</label>
 				<input type="text" name="title"><br>
 				<label for="entry">Entry</label>
 				<textarea rows="5" name="entry"></textarea>
 				<input type="submit" value="Publish Entry" class="button">
-				<a href="#" class="button button-secondary">Cancel</a>
+				<a href="/" class="button button-secondary">Cancel</a>
 			</form>
 		</div>
 	</div>
