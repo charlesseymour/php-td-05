@@ -1,0 +1,45 @@
+<?php include __DIR__ . '/header.phtml'; ?>
+<section>
+	<div class="container">
+		<div class="entry-list single">
+			<article>
+				<?php 
+				$fullDate = date('F j, Y', strtotime($post->date));
+				echo <<<EOT
+				<h1>$post->title</h1>
+				<time datetime="$post->date">$fullDate</time>
+				<div class="entry">
+					<p>$post->body</p>
+					<p><a class="link" href="edit/$post->id">Edit Entry</a></p>
+				</div>
+EOT;
+?>
+			</article>
+		</div>
+	</div>
+</section>
+<section class="entry-comments">
+	<div class="container">
+			<h2>Comments</h2>
+			<?php foreach($comments as $comment) {
+				$fullDate = date('F j, Y', strtotime($comment->date));
+				echo <<<EOT
+				<div class="comment">
+					<strong>$comment->name</strong>
+					<time datetime="$comment->date">$fullDate</time>
+					<p>$comment->body</p>
+				</div>
+EOT;
+			} ?>
+			<div class="new-comment">
+				<form>
+					  <label for="name"> Name</label>
+					  <input type="text" name="name"><br>
+					  <label for="comment">Comment</label>
+					  <textarea rows="5" name="comment"></textarea>
+					  <input type="submit" value="Post Comment" class="button">
+				</form>
+			</div>
+	</div>
+</section>
+<?php include __DIR__ . '/footer.phtml'; ?>
