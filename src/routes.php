@@ -24,7 +24,7 @@ $app->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
 	]);
 });
 
-$app->map(['GET', 'POST'], '/edit/{id}', function ($request, $response, $args) {
+$app->get('/edit/{id}', function ($request, $response, $args) {
 	$nameKey = $this->csrf->getTokenNameKey();
     $valueKey = $this->csrf->getTokenValueKey();
     $name = $request->getAttribute($nameKey);
