@@ -24,7 +24,7 @@ $app->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
 	]);
 });
 
-$app->get('/edit/{id}', function ($request, $response, $args) {
+$app->map(['GET', 'POST'], '/edit/{id}', function ($request, $response, $args) {
 	$nameKey = $this->csrf->getTokenNameKey();
     $valueKey = $this->csrf->getTokenValueKey();
     $name = $request->getAttribute($nameKey);
@@ -35,6 +35,7 @@ $app->get('/edit/{id}', function ($request, $response, $args) {
 		"post" => $post
 	]);
 });
+
 
 $app->get('/', function ($request, $response, $args) {
 	$posts = Post::orderBy('date', 'desc')->take(3)->get();

@@ -50,6 +50,12 @@ footer a {
 	padding-bottom: 1px;
 }
 
+.alert {
+	color: red;
+	font-size: 1.5em;
+	text-align: center;
+}
+
 
 
 /* ==========================================================================

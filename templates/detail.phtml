@@ -5,8 +5,12 @@
 			<article>
 				<?php 
 				if (empty($post)) {
-					echo "<p style=\"color: red; font-size: 1.5em;\">Sorry, could not find that post</p>";
+					echo '<p class=\"alert\">Sorry, could not find that post</p>';
 				} else {
+					if (isset($_SESSION['status'])) {
+						echo '<p class="alert">'. $_SESSION['status'] . '</p>';
+						unset($_SESSION['status']);
+					}
 					$fullDate = date('F j, Y', strtotime($post->date));
 					echo <<<EOT
 					<h1>$post->title</h1>
