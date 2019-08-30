@@ -1,6 +1,8 @@
 <?php 
 include __DIR__ . '/header.phtml'; 
 
+// If comment form submitted, get post data and create new comment
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$commenter = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
 	$comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);

@@ -1,6 +1,8 @@
 <?php 
 include __DIR__ . '/header.phtml';
 
+// If create post form submitted, get post data and create new post
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
 	$entry = filter_input(INPUT_POST, 'entry', FILTER_SANITIZE_STRING);
