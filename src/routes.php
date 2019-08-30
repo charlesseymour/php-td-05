@@ -1,8 +1,6 @@
 <?php 
 
 include("../models/Post.php");
-//use \Models\Post;
-// Routes
 
 $app->map(['GET', 'POST'], '/blog/{id}', function ($request, $response, $args) {
 	$nameKey = $this->csrf->getTokenNameKey();

@@ -67,7 +67,7 @@ EOT;
 		echo <<<EOT
 		<div class="new-comment">
 EOT;
-		if (isset($status)) { echo '<p class="alert">Please enter all fields</p>'; }
+		if (isset($alert)) { echo '<p class="alert">Please enter all fields</p>'; }
 		echo <<<EOT
 			<form action="/blog/$post->id" method="post">
 				  <input type="hidden" name="$nameKey" value="$name">
