@@ -1,4 +1,26 @@
-<?php include __DIR__ . '/header.phtml'; ?>
+<?php 
+include __DIR__ . '/header.phtml'; 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	$commenter = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+	$comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+	$commenter = trim($commenter);
+	$comment = trim($comment);
+	if (empty($commenter) || empty($comment)) {
+		$alert = '<p class="alert">Please enter all fields</p>';
+	} else {
+		$newComment = new Comment;
+		$newComment->name = $commenter;
+		$newComment->body = $comment;
+		$newComment->date = date('m/d/Y');
+		$newComment->post_id = $post->id;
+		$newComment->save();
+		$_SESSION['status'] = "Comment added!";
+		header("Location: /blog/" . $post->id);
+		exit();
+	}
+}
+?>
 <section>
 	<div class="container">
 		<div class="entry-list single">
@@ -32,23 +54,36 @@ EOT;
 	<div class="container">
 		<h2>Comments</h2>
 EOT;
-		foreach($comments as $comment) {
-			$fullDate = date('F j, Y', strtotime($comment->date));
+		foreach($comments as $cmt) {
+			$fullDate = date('F j, Y', strtotime($cmt->date));
 			echo <<<EOT
 			<div class="comment">
-				<strong>$comment->name</strong>
-				<time datetime="$comment->date">$fullDate</time>
-				<p>$comment->body</p>
+				<strong>$cmt->name</strong>
+				<time datetime="$cmt->date">$fullDate</time>
+				<p>$cmt->body</p>
 			</div>
 EOT;
 		}
 		echo <<<EOT
 		<div class="new-comment">
-			<form>
+EOT;
+		if (isset($status)) { echo '<p class="alert">Please enter all fields</p>'; }
+		echo <<<EOT
+			<form action="/blog/$post->id" method="post">
+				  <input type="hidden" name="$nameKey" value="$name">
+				  <input type="hidden" name="$valueKey" value="$value">
 				  <label for="name"> Name</label>
-				  <input type="text" name="name"><br>
+				  <input type="text" name="name"
+EOT;
+				  if (!empty($commenter)) { echo "value=$commenter"; }
+		echo <<<EOT
+				  ><br>
 				  <label for="comment">Comment</label>
-				  <textarea rows="5" name="comment"></textarea>
+				  <textarea rows="5" name="comment">
+EOT;
+				  if (!empty($comment)) { echo $comment; }
+		echo <<<EOT
+				  </textarea>
 				  <input type="submit" value="Post Comment" class="button">
 			</form>
 		</div>
