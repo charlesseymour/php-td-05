@@ -9,7 +9,7 @@
 	<div class="container">
 		<div class="entry-list">
 			<?php foreach($posts as $post) {
-				$fullDate = date('F j, Y', strtotime($post->date));
+				$fullDate = substr_replace($post->date, " at ", 10, 0);
 				echo <<<EOT
 				<article>
 					<h2><a href="blog/$post->id">$post->title</a></h2>
